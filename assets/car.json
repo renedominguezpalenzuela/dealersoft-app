@@ -1,0 +1,13 @@
+{
+    "Carro1": {
+        "name":"lada",
+        "code":"ld",
+        "nativeName":"LADOS"
+    },
+
+    "Carro2": {
+        "name":"ford",
+        "code":"fd",
+        "nativeName":"FORDS"
+    }
+}
