@@ -1,0 +1,23 @@
+class Car {
+    //campos de datos
+    final String name;
+    final String nativeName;
+    final String code;
+
+    //constructor
+    const Car({
+        required this.name, 
+        required this.nativeName, 
+        required this.code
+    });
+
+    //factory
+    factory Car.fromJson(Map<String, dynamic> json)=>Car(
+        name: json['name'],
+        code: json['code'],
+        nativeName: json['nativeName']
+   );
+
+
+
+}
