@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:dealersoft_app/utiles/home_drawer.dart';
+import 'package:dealersoft_app/utiles/scrollable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:dealersoft_app/model/car';
 
@@ -14,29 +15,47 @@ class _AllCarsState extends State<AllCars> {
   final _scaffKey = GlobalKey<ScaffoldState>();
 
   List<Car> cars = [];
+  List<Car> carrosSeleccionados = [];
 
   @override
   void initState() {
-    
     super.initState();
 
     init();
-
-    
   }
 
   Future init() async {
-   //List<Car> carros = await Utils.loadCars();
-   List<Car> carros = [];
-   carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    //List<Car> carros = await Utils.loadCars();
+    List<Car> carros = [];
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
+    carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
+    carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
+    carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
+    carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
+    carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
+    carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
+    carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
+    carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
+    carros.add(const Car(code: 'LADA', name: 'ladaNAME', nativeName: 'sssss'));
     carros.add(const Car(code: 'Ford', name: 'fordNAME', nativeName: 'xxxx'));
     carros.add(const Car(code: 'VW', name: 'wwNAME', nativeName: 'gggg'));
 
-   setState((){
-        cars = carros;
+    setState(() {
+      cars = carros;
     });
-}
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +71,13 @@ class _AllCarsState extends State<AllCars> {
             width: MediaQuery.of(context).size.width * 0.15,
           ),
         ),
-        body:buildDataTable()
-        );
+        body: ScrollableWidget(child: buildDataTable()));
   }
 
   Widget buildDataTable() {
-    final columns = ['Flag', 'Name', 'Native name'];
+    final columns = ['','Flag', 'Name', 'Native name'];
 
-    return DataTable(
-      columns: getColumns(columns),
-      rows: getRows(cars)
-    );
+    return DataTable(columns: getColumns(columns), rows: getRows(cars));
   }
 
   List<DataColumn> getColumns(List<String> columns) => columns
@@ -71,14 +86,24 @@ class _AllCarsState extends State<AllCars> {
           ))
       .toList();
 
+  List<DataRow> getRows(List<Car> cars) => cars
+      .map((Car car) => DataRow(
+              //        selected:  carrosSeleccionados.contains(car),
+              //  onSelectChanged: (isSelected)=>   setState(() {
+              //                     final isAdding = isSelected!=null && isSelected;
+              //                     isAdding ? carrosSeleccionados.add(car) : carrosSeleccionados.remove(car);
+              //         }),
 
-List<DataRow> getRows(List<Car> cars)=>cars
-     .map((Car car)=> DataRow(cells: [   
-         DataCell( Text(car.name) ),
-         DataCell( Text(car.code) ),
-         DataCell( Text(car.nativeName) ),   
-     ])     
-).toList();
-
+              cells: [
+                DataCell(TextButton(
+                        onPressed: () {
+                          debugPrint(car.name);
+                        },
+                        child: const Icon(Icons.arrow_forward_ios, color: Colors.black), )),
+               
+                DataCell(SizedBox(width: 50, child: Text(car.code))),
+                 DataCell(Text(car.name)),
+                DataCell(SizedBox(width: 100, child: Text(car.nativeName))),
+              ]))
+      .toList();
 }
-
