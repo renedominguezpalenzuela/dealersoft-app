@@ -1,21 +1,76 @@
+
+
 class Car {
     //campos de datos
-    final String name;
-    final String nativeName;
-    final String code;
+    final int id;
+    final String name;   
+    final String car_identifier;
+    
+    final String build_variant;
+    
+    final String first_register_date;
+    
+    final String kilometres;
+    final String kilowatt;
+    final String color;
+    
+    final String last_owner;
+    final String hsn;
+    final String tsn;
+    final List<String> comments;
+    
+    final bool selled;
+    final bool can_save;
+    final bool a25;
+    final bool iva;
+
 
     //constructor
     const Car({
+    
+          required this.id,
         required this.name, 
-        required this.nativeName, 
-        required this.code
+      
+        required this.car_identifier,
+   
+    this.build_variant='',
+   
+    this.first_register_date='',
+    this.kilometres='',
+    this.kilowatt='',
+    this.color='',
+   
+    this.last_owner='',
+  
+    this.hsn='',
+    this.tsn='',
+     this.comments=const [],
+    this.selled=false,
+    
+    this.can_save=true,
+    this.a25=false,
+    this.iva=false
+       
     });
 
     //factory
     factory Car.fromJson(Map<String, dynamic> json)=>Car(
+        id: json['id'],
         name: json['name'],
-        code: json['code'],
-        nativeName: json['nativeName']
+        car_identifier: json['car_identifier'],
+        build_variant: json['build_variant'],
+        first_register_date: json['first_register_date'],
+        kilometres: json['kilometres'],
+        kilowatt: json['kilowatt'],
+        color: json['color'],
+        last_owner: json['last_owner'],
+        hsn: json['hsn'],
+        tsn: json['tsn'],
+        comments: json['comments'],
+        selled: json['selled'],
+        can_save: json['can_save'],
+        a25: json['a25'],
+        iva: json['iva'],        
    );
 
 

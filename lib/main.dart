@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'DealerSoft',
         theme: ThemeData(fontFamily: 'Open Sans'),
-    //    initialRoute: "/splash",
-        initialRoute: "/home",
+        initialRoute: "/splash",
+      //  initialRoute: "/home",
 
         //Definir rutas
         routes: {

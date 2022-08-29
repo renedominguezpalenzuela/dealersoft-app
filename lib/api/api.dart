@@ -1,5 +1,8 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
+
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import '../global/globales.dart';
@@ -47,8 +50,6 @@ class Api {
         respuesta['cod_resp'] = respuestaApi['error']['status'];
         respuesta['detalle'] = respuestaApi['error']['message'];
       }
-
-     
     } catch (e) {
       respuesta['cod_resp'] = 900;
       respuesta['detalle'] = 'Error no previsto: $e';
@@ -75,7 +76,7 @@ class Api {
 
       respuesta = respuestaApi;
 
-        respuesta['cod_resp'] = 200;
+      respuesta['cod_resp'] = 200;
       respuesta['detalle'] = 'OK';
 
       //{data: null, error: {status: 400, name: ValidationError, message: Invalid identifier or password, details: {}}}
@@ -83,9 +84,45 @@ class Api {
         respuesta['cod_resp'] = respuestaApi['error']['status'];
         respuesta['detalle'] = respuestaApi['error']['message'];
       }
+    } catch (e) {
+      respuesta['cod_resp'] = 900;
+      respuesta['detalle'] = 'Error: $e';
+    }
+    return respuesta;
+  }
 
+//--------------------------------------------------------------------------------
+//     sendGET
+//--------------------------------------------------------------------------------
+  Future<Map> sendGET(String url, String token) async {
+    Map<String, String> headers = {};
 
-     
+    if (token != '') {
+      headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      };
+    } else {
+      headers = {'Content-Type': 'application/json'};
+    }
+
+    //inicializo
+    Map respuesta = {};
+
+    try {
+      var response = await get(Uri.parse(url), headers: headers);
+      Map<String, dynamic> respuestaApi = jsonDecode(response.body);
+
+      respuesta = respuestaApi;
+
+      respuesta['cod_resp'] = 200;
+      respuesta['detalle'] = 'OK';
+
+      //{data: null, error: {status: 400, name: ValidationError, message: Invalid identifier or password, details: {}}}
+      if (respuestaApi.containsKey('error')) {
+        respuesta['cod_resp'] = respuestaApi['error']['status'];
+        respuesta['detalle'] = respuestaApi['error']['message'];
+      }
     } catch (e) {
       respuesta['cod_resp'] = 900;
       respuesta['detalle'] = 'Error: $e';
@@ -103,14 +140,35 @@ class Api {
   Future<Map> loguinUser(String identifier, String passWord) async {
     String url = Globales.urlLoguin;
 
-    debugPrint(url);
-
     Map<String, String> headers = {'Content-Type': 'application/json'};
 
     Map data = {};
     data['identifier'] = identifier.trim().toLowerCase();
     data['password'] = passWord;
 
-    return await sendPost(url, headers, data);
+    Map respuesta = {};
+    respuesta = await sendPost(url, headers, data);
+
+    if (respuesta.containsKey('jwt')) {
+      Globales.userID = respuesta['user']['id'];
+      Globales.token = respuesta['jwt'];
+    }
+
+    return respuesta;
+  }
+
+  Future<Map> getListaCarros(String token) async {
+    Api api = Api();
+    Map respuesta = {};
+
+    
+    respuesta = await api.sendGET(Globales.urlCarList, token);
+
+    
+   
+
+    //respuesta['datos'] = listaCarros;
+
+    return respuesta;
   }
 }

@@ -31,12 +31,9 @@ void main() {
     Api api = Api();
     Map respuesta = {};
     respuesta = await api.loguinUser('axl', 'Abcd1234');
-    //if (kDebugMode) {
-
-    // print(respuesta);
-    //}
+    
     var token = respuesta['jwt'];
-    print(token);
+    //print(token);
 
     expect(() => isNull(token), throwsAssertionError);
 
@@ -44,8 +41,6 @@ void main() {
 
     // print(user);
 
-    print(user['username']);
-    print(user['email']);
     
 
     expect(() => isNull(user), throwsAssertionError);

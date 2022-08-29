@@ -6,7 +6,7 @@ import 'package:dealersoft_app/api/api.dart';
 import 'package:dealersoft_app/global/globales.dart';
 import 'package:dealersoft_app/utiles/dialogo_progreso.dart';
 import 'package:dealersoft_app/utiles/mensaje_snackbar.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 class CredentialPage extends StatefulWidget {
@@ -192,7 +192,7 @@ class _CredentialPageState extends State<CredentialPage>
         children: [
           TextButton(
               onPressed: () {
-                debugPrint("hola");
+                //debugPrint("hola");
               },
               child: const Text(
                 "Stattdessen anmelden",
@@ -238,11 +238,7 @@ class _CredentialPageState extends State<CredentialPage>
 
     respuesta = await api.loguinUser(Globales.userName, Globales.pass);
 
-    if (kDebugMode) {
-      print("RESPUESTA");
-      print(respuesta);
-    }
-
+ 
     int codRespuesta = respuesta['cod_resp'];
 
     String detalleRespuesta = respuesta['detalle'];
@@ -255,13 +251,14 @@ class _CredentialPageState extends State<CredentialPage>
 
     var token = respuesta['jwt'];
     Globales.token = token;
+    Globales.userID = respuesta['user']['id'];
 
     dialogoProgreso.ocultar();
 
-    debugPrint(Globales.token);
+    
 
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context, '/home', arguments: "AXL ROSES");
+    Navigator.pushReplacementNamed(context, '/allcars', arguments: "AXL ROSES");
   }
 }
 
